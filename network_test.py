@@ -47,9 +47,6 @@ def set_args():
 
 	return arg_parser
 
-# host name param, string
-# target name param, string
-
 ###
 #  kick off ping test
 ###
@@ -148,7 +145,8 @@ if __name__ == '__main__':
 	# Sets user arguments, then calls the class method to parse.
 	args = set_args().parse_args()
 
-	result_file = 'result-%s-to-%s-tqdm.txt' % (args.name, args.target)
+	# Creates a result file timestamped with current date and time as a string in the format YYYYMMDD_HHMMSS
+	result_file = 'result-%s-to-%s-%s.txt' % (args.name, args.target, datetime.now().strftime('%Y%m%d_%H%M%S'))
 
 	print('Results will be saved to this file: %s' % result_file)
 	print('To stop the test, press Ctrl-C until the test stops.')
