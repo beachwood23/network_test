@@ -27,7 +27,6 @@ def set_args():
 		help='The duration, in seconds, to run the network test for.',
 		type=int,
 		required=True)
-
 	arg_parser.add_argument(
 		'-n',
 		'--name',
@@ -46,6 +45,17 @@ def set_args():
 		required = False)
 
 	return arg_parser
+
+###
+# Wrap pings in async, display progress bar
+###
+async def run_ping_test(duration, target, result_file):
+	# Because the 'ping' and 'tqdm' command has blocking i/o, it will block the task
+	# from updating. We use asyncio.to_thread (new in python 3.9) to avoid.
+
+	await asyncio.gather(
+		asyncio.to_thread(display_progress_bar, duration),
+		asyncio.to_thread(start_ping_test, duration, target, result_file))
 
 ###
 #  kick off ping test
@@ -74,16 +84,6 @@ def display_progress_bar(duration):
 				unit_scale=True):
 		time.sleep(1)
 
-###
-# Wrap pings in async, display progress bar
-###
-async def run_ping_test(duration, target, result_file):
-	# Because the 'ping' and 'tqdm' command has blocking i/o, it will block the task
-	# from updating. We use asyncio.to_thread (new in python 3.9) to avoid.
-
-	await asyncio.gather(
-		asyncio.to_thread(display_progress_bar, duration),
-		asyncio.to_thread(start_ping_test, duration, target, result_file))
 
 ###
 #  generate charts
@@ -135,11 +135,6 @@ def generate_chart(name, target, result_file):
 	# figure.savefig(chart_filename)
 
 	plt.show() # Enable this to show a preview of the chart for each one generated.
-
-
-###
-#  save charts to file, offer to display chart
-###
 
 if __name__ == '__main__':
 	# Sets user arguments, then calls the class method to parse.
