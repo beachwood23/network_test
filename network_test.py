@@ -46,9 +46,6 @@ def set_args():
 
 	return arg_parser
 
-###
-# Wrap pings in async, display progress bar
-###
 async def run_ping_test(duration, target, result_file):
 	# Because the 'ping' and 'tqdm' command has blocking i/o, it will block the task
 	# from updating. We use asyncio.to_thread (new in python 3.9) to avoid.
@@ -57,9 +54,6 @@ async def run_ping_test(duration, target, result_file):
 		asyncio.to_thread(display_progress_bar, duration),
 		asyncio.to_thread(start_ping_test, duration, target, result_file))
 
-###
-#  kick off ping test
-###
 def start_ping_test(duration, target, result_file):
 	# Below code is borrowed from: https://stackoverflow.com/a/32684938
 	# Option for the number of packets as a function of
@@ -72,9 +66,6 @@ def start_ping_test(duration, target, result_file):
 	# Original subprocess call - this works fine
 	result = subprocess.call(ping_loop_cmd, shell=True)
 
-###
-# Display progress bar
-###
 def display_progress_bar(duration):
 	## Using tqdm
 	for i in tqdm(
@@ -84,18 +75,13 @@ def display_progress_bar(duration):
 				unit_scale=True):
 		time.sleep(1)
 
-
-###
-#  generate charts
-###
-def generate_chart(name, target, result_file):
-	test_results = open(result_file)
-
+def read_ping_results(result_file):
 	DATETIME_FORMAT = '%Y-%m-%d:%H:%M:%S'
 	ping_timestamps = []
 	ping_responsetimes_ms = []
 
 	## Read results file
+	test_results = open(result_file)
 	test_results.seek(0)
 	for line in test_results:
 		if 'from' in line:
@@ -104,10 +90,14 @@ def generate_chart(name, target, result_file):
 				ping_responsetimes_ms.append(int((line[line.index('time') + 5:line.index('ms')])))
 			else:
 				ping_timestamps.append(datetime.strptime(line[:line.index('from') - 11], DATETIME_FORMAT))
-					
 				ping_responsetimes_ms.append(float((line[line.index('time') + 5:line.index('ms')])))
 
 	test_results.close() # close results file
+
+	return ping_timestamps, ping_responsetimes_ms
+
+def generate_chart(name, target, result_file):
+	ping_timestamps, ping_responsetimes_ms = read_ping_results(result_file)
 
 	## Prepare chart
 	x_dates = dateplot.date2num(ping_timestamps)
