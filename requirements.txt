@@ -1,5 +1,4 @@
 tqdm
-matplotlib
-numpy
 asyncio
 datetime
+plotext
