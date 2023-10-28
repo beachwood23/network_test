@@ -104,11 +104,21 @@ def generate_text_chart(name, target, result_file):
     plt.date_form('d/m/Y H:M:S')
 
     times = plt.datetimes_to_string(ping_timestamps)
-    plt.plot(times, ping_responsetimes_ms)
+
+    scatter_limit = 40
+    # If fewer than `scatter_limit` examples, connect the dots, else a scatter plot is fine
+    # Number picked because it seemed like a nice limit.
+    if len(times) < scatter_limit:
+        plt.plot(times, ping_responsetimes_ms)
+    else:
+        plt.scatter(times, ping_responsetimes_ms)
 
     plt.title('Ping latency from ' + name + ' to ' + target)
     plt.xlabel('Time of ping')
     plt.ylabel('Ping response time (ms)')
+
+    plt.ylim(0)
+    plt.plot_size(plt.terminal_width(), plt.terminal_height() / 2)
 
     plt.clc()
     plt.interactive(True)
