@@ -126,38 +126,6 @@ def generate_text_chart(name, target, result_file):
     plt.show()
 
 
-# old function
-def generate_chart(name, target, result_file):
-    ping_timestamps, ping_responsetimes_ms = read_ping_results(result_file)
-
-    # Prepare chart
-    x_dates = dateplot.date2num(ping_timestamps)
-
-    figure, axis = plt.subplots(figsize=(20, 5))
-    axis.set(
-        xlabel='Time of ping',
-        ylabel='Ping response time (ms)',
-        title='Ping latency from ' + name + ' to ' + target)
-    axis.xaxis.set_major_locator(dateplot.HourLocator(interval=5))
-
-    ## Set the date format. We get this from:
-    # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
-    # Our format is like: Thu, Dec 10 2:00PM
-    date_format = dateplot.DateFormatter("%a %b %d %I:%M%p")
-
-    axis.xaxis.set_major_formatter(date_format)
-    plt.xticks(rotation=20)
-    axis.plot(ping_timestamps, ping_responsetimes_ms)
-
-    axis.set_ylim(bottom=0, top=None)  # get the y-axis to start at 0
-
-    plt.tight_layout()  # get rid of cropped x-axis labels
-    # chart_filename = 'chart-' + name + '-to-' + target + '.png'
-    # figure.savefig(chart_filename)
-
-    plt.show()  # Enable this to show a preview of the chart for each one generated.
-
-
 if __name__ == '__main__':
     # Sets user arguments, then calls the class method to parse.
     args = set_args().parse_args()
@@ -176,5 +144,4 @@ if __name__ == '__main__':
 
     if not args.nochart:
         print('Generating chart...')
-        # generate_chart(args.name, args.target, result_file)
         generate_text_chart(args.name, args.target, result_file)
