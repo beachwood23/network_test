@@ -1,4 +1,4 @@
-# network_test
+# ping-chart
 A simple tool to ping a remote server for a period of time, and generate a graph of the connection times. It uses your computer's built-in `ping` tool.
 
 ## Requirements
@@ -8,8 +8,8 @@ A simple tool to ping a remote server for a period of time, and generate a graph
 
 ## Usage
 ```
-$ python network_test.py -h
-usage: network_test.py [-h] -d DURATION -n NAME -t TARGET [--nochart NOCHART]
+$ python ping-chart.py -h
+usage: ping-chart.py [-h] -d DURATION -n NAME -t TARGET [--nochart NOCHART]
 
 Creates charts from output of network pings.
 
@@ -25,7 +25,7 @@ options:
 
 Example:
 ```
-python network_test.py -d 60 -n my-mac -t www.github.com 
+python ping-chart.py -d 60 -n my-mac -t www.github.com 
 ```
 We then see a progress bar during the test:
 
