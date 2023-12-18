@@ -1,4 +1,4 @@
-# ping-chart
+# ping-chart.py
 A simple tool to ping a remote server for a period of time, and generate a graph of the connection times. It uses your computer's built-in `ping` tool.
 
 ## Requirements
@@ -7,8 +7,15 @@ A simple tool to ping a remote server for a period of time, and generate a graph
 - installing all `Python` dependencies with `python3 -m pip install -r requirements.txt`.
 
 ## Usage
+First, download script and install dependencies:
 ```
-$ python ping-chart.py -h
+git clone https://github.com/beachwood23/ping-chart.git
+python3 -m pip install -r requirements.txt
+```
+
+Then, you can do:
+```
+$ python3 ping-chart.py -h
 usage: ping-chart.py [-h] -d DURATION -n NAME -t TARGET [--nochart NOCHART]
 
 Creates charts from output of network pings.
