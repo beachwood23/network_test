@@ -29,9 +29,9 @@ python ping-chart.py -d 60 -n my-mac -t www.github.com
 ```
 We then see a progress bar during the test:
 
-![Progress](https://github.com/beachwood23/network_test/blob/main/screenshots/progress.png?raw=true)
+![Progress](https://github.com/beachwood23/ping-chart/blob/main/screenshots/progress.png?raw=true)
 
 Then, after the test has completed, we will see a full chart:
 
-![Chart](https://github.com/beachwood23/network_test/blob/main/screenshots/chart.png?raw=true)
+![Chart](https://github.com/beachwood23/ping-chart/blob/main/screenshots/chart.png?raw=true)
 
