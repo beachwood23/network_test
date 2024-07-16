@@ -71,8 +71,7 @@ def start_ping_test(duration, target, result_file):
     ping_loop_cmd = ping_loop_cmd + " do echo" + ' "$(date +%Y-%m-%d:%H:%M:%S): $pong"'
     ping_loop_cmd = ping_loop_cmd + " >> %s ; done" % result_file
 
-    # Original subprocess call - this works fine
-    result = subprocess.call(ping_loop_cmd, shell=True)
+    subprocess.call(ping_loop_cmd, shell=True)
 
 
 def display_progress_bar(duration):
@@ -85,7 +84,6 @@ def display_progress_bar(duration):
 def read_ping_results(result_file):
     DATETIME_FORMAT = "%Y-%m-%d:%H:%M:%S"
     ping_timestamps = []
-    ping_times = []
     ping_responsetimes_ms = []
 
     # Read results file
@@ -162,7 +160,10 @@ if __name__ == "__main__":
             "A chart will be generated at the end of the test. You can save the chart, or use the generate_chart() function after a series of tests to recover."
         )
 
-    asyncio.run(run_ping_test(args.duration, args.target, result_file))
+    # todo: display chart immediately during test, and update throughout
+    asyncio.run(
+        run_ping_test(args.duration, args.target, result_file),
+    )
 
     if not args.nochart:
         print("Generating chart...")
