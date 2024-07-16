@@ -15,8 +15,8 @@ python3 -m pip install -r requirements.txt
 
 Then, you can do:
 ```
-$ python3 ping-chart.py -h
-usage: ping-chart.py [-h] -d DURATION -n NAME -t TARGET [--nochart NOCHART]
+$ python3 ping_chart.py -h
+usage: ping_chart.py [-h] -d DURATION -n NAME -t TARGET [--nochart NOCHART]
 
 Creates charts from output of network pings.
 
@@ -32,7 +32,7 @@ options:
 
 Example:
 ```
-python ping-chart.py -d 60 -n my-mac -t www.github.com 
+python ping_chart.py -d 60 -n my-mac -t www.github.com 
 ```
 We then see a progress bar during the test:
 
