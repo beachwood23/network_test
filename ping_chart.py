@@ -1,4 +1,3 @@
-
 import matplotlib.dates as dateplot
 import plotext as plt
 from datetime import datetime
